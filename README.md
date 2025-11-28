@@ -49,7 +49,7 @@ This architecture is modular, maintainable, and suitable for real-world disaster
 3. **Rescue Units/Volunteers Arrive**
 4. **Ambulances Move Injured to Hospitals**
 5. **Hospitals admit or overflow → exceptions handled**
-6. **Food Supply deployed if city food hits zero**
+6. **Food Supply deployed if city food hits below 60%**
 7. **End of day report generated (population, deaths, rescues, etc.)**
 
 ---
