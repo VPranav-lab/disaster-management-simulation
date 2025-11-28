@@ -13,6 +13,84 @@ public class Main {
 		EventCalendar calendar = new EventCalendar();
 		City Messina = City.create("Messina");
 		
+		  System.out.println("\n---- Subtyping and Multityping Demo in Disaster Management System ----"); 
+		  Zone demozone = new Zone("demoZone"); 
+		  Hospital demoHospital = new Hospital(demozone,sm); 
+		  Resource demoRescue = new RescueUnit("Demo Rescue");
+		  Resource demoAmbulance = new AmbulanceUnit("Demo Ambulance"); 
+		  Resource demoPolice = new PoliceUnit("DemoPolice");
+		  
+		  // subtyping and multityping through abstract class Event and Interfaces EndOfTheDay and WeatherObserver
+		  
+		  EndOfTheDayEvent demoevent = new EndOfTheDayEvent(0,null,null); 
+		  Event e1 = demoevent; // Access via abstract class 
+		  EndOfTheDay IEnd = demoevent; //Access via Interface 
+		  WeatherObserver Iweather = demoevent; // Access via Interface
+		  Iweather.onWeatherUpdate("Rain");
+		  System.out.println("Weather updated to "+ Event.getlatestWeather());
+		  
+		  // subtyping and multityping through abstract class Disaster and Interface SeverityCalculator
+		   FloodDisaster demoDisaster = new FloodDisaster(); 
+		   Disaster disaster = demoDisaster; // Access via abstract class 
+		   SeverityCalculator severity = demoDisaster; // Access via Interface 
+		   //disaster.setZone(demozone);
+		   int Severity = (severity.determineSeverity("Rain")); // severity determined through the interface SeverityCalculator
+		  
+		  disaster.initializeCasualties(Severity,demozone); 
+		  Event.addDailyDisasters(1);
+		  demozone.setDisasterOngoing(true);
+		  demozone.setCurrentDisaster(disaster);
+		  System.out.println(disaster);
+		  
+		  demoRescue.assignToZone(demozone);
+		  demoAmbulance.assignToZone(demozone);
+		  demoPolice.assignToZone(demozone);
+		  
+		  demoRescue.action(0, null,null, null, tm);
+		  demoAmbulance.action(0,null,null,sm,tm);
+		  demoPolice.action(0, null,null, null, tm);
+		  
+		  demoRescue.releaseFromZone();
+		  demoAmbulance.releaseFromZone();
+		  demoPolice.releaseFromZone();
+		  
+		  System.out.println("\nDaily attributes Before End OF The Day"); 
+		  System.out.printf("\n======================================== DAILY SUMMARY FOR DEMO DAY ========================================\n"); 
+		  System.out.printf("%-10s | %10s | %10s | %10s | %10s | %16s | %20s\n",
+		  "Disasters","Births", "Deaths", "Injuries", "Rescues", "Total Population","Food in the city (%)"); 
+		  System.out.println("----------------------------------------------------------------------------------------------------------"); 
+		  System.out.printf("%-10d | %10d | %10d | %10d | %10d | %16d | %20d%n",
+		  Event.getDailyDisasters(), Event.getDailyBirths(), Event.getDailyDeaths(),
+		  Event.getDailyInjured(), Event.getDailyrescued(), Event.getTotalPopulation(),
+		  Event.getTotalFoodPercentage()); 
+		  System.out.println("----------------------------------------------------------------------------------------------------------");
+		  
+		  IEnd.EndOfTheDayEvent();
+		  
+		  System.out.println("\nDaily attributes After End OF The Day"); 
+		  System.out.printf("\n======================================== DAILY SUMMARY FOR DEMO DAY ========================================\n"); 
+		  System.out.printf("%-10s | %10s | %10s | %10s | %10s | %16s | %20s\n",
+		  "Disasters","Births", "Deaths", "Injuries", "Rescues", "Total Population",
+		  "Food in the city (%)"); 
+		  System.out.println("----------------------------------------------------------------------------------------------------------"); 
+		  System.out.printf("%-10d | %10d | %10d | %10d | %10d | %16d | %20d%n",
+		  Event.getDailyDisasters(), Event.getDailyBirths(), Event.getDailyDeaths(),
+		  Event.getDailyInjured(), Event.getDailyrescued(), Event.getTotalPopulation(),
+		  Event.getTotalFoodPercentage()); 
+		  System.out.println("----------------------------------------------------------------------------------------------------------"); 
+		  Event.resetTotalValues(); 
+		  sm.removeHospital(demoHospital); 
+		  demozone =null; 
+		  demoHospital = null; 
+		  demoRescue = null; 
+		  demoAmbulance = null;
+		  demoPolice = null; 
+		  demoevent = null; 
+		  demoDisaster = null;
+		  
+		  System.out.println("\n---- Demonstration Ended ----");
+		 
+		
 		Zone Z1 = new Zone("Zone 1",sm);
 		Zone Z2 = new Zone("Zone 2",sm);
 		Zone Z3 = new Zone("Zone 3",sm);
